@@ -11,9 +11,12 @@ app.use(cors());
 app.use(express.json());
 
 // Autenticación con Google Vision
+const credentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON || '{}');
+
 const client = new vision.ImageAnnotatorClient({
-  keyFilename: path.join(__dirname, 'clave-vision.json'), // tu archivo de clave
+  credentials,
 });
+
 
 // Ruta POST para recibir imagen y analizarla
 app.post('/ocr', upload.single('imagen'), async (req, res) => {
